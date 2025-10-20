@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>부스텟 계산기</title>
+  <link rel="icon" href="https://lh3.googleusercontent.com/d/1phO_60OAUePfHWPlBpb4_nduEL2aMygO" type="image/png">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+    .row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    label {
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input[type="number"] {
+      width: 120px;
+      text-align: center;
+      appearance: textfield; /* 스핀버튼 제거 */
+    }
+    /* 크롬, 사파리 등 웹킷 브라우저용 */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    /* 파이어폭스용 */
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2>부스텟 계산기</h2>
+
+  <div class="row">
+
+    <div class="input-group">
+      <label for="baseStat">순 부스텟</label>
+      <input type="number" id="baseStat" oninput="calculate()">
+    </div>
+    <div class="input-group">
+      <label for="addedStat">추가된 부스텟</label>
+      <input type="number" id="addedStat" oninput="calculate()">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="input-group">
+      <label for="itemLevel">아이템 레벨</label>
+      <input type="number" id="itemLevel" oninput="calculate()">
+    </div>
+    <div class="input-group">
+      <label for="targetStat">목표 부스텟</label>
+      <input type="number" id="targetStat" oninput="calculate()">
+    </div>
+  </div>
+
+  <div id="result">[몇 레벨부터?] <BR>결과가 여기에 표시됩니다.</div>
+
+  <script>
+    function calculate() {
+      const baseStat = parseFloat(document.getElementById('baseStat').value) || 0;
+      const addedStat = parseFloat(document.getElementById('addedStat').value) || 0;
+      const itemLevel = parseFloat(document.getElementById('itemLevel').value) || 0;
+      const targetStat = parseFloat(document.getElementById('targetStat').value) || 0;
+
+      const totalStat = baseStat + addedStat;
+      const requiredIncrease = targetStat - totalStat;
+      const levelOffset = Math.ceil(requiredIncrease / 5);
+      const resultLevel = itemLevel - levelOffset + 1;
+
+      document.getElementById('result').innerHTML = `[몇 레벨부터?]<br>${resultLevel} 레벨부터 부스텟 찍기`;
+    }
+  </script>
+</body>
+</html>
